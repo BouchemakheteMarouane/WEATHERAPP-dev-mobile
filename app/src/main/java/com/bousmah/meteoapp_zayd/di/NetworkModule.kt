@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
@@ -23,14 +22,8 @@ object NetworkModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-        // OWASP: Certificate Pinning for security
-        val certificatePinner = CertificatePinner.Builder()
-            .add("api.openweathermap.org", "sha256/axmG9ZzpvYf9Sct9I9KzZk1Bdfy9Uay7N0n6f3pC2vM=") // Example hash, should be updated with actual current hash
-            .build()
-
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .certificatePinner(certificatePinner)
             .build()
     }
 

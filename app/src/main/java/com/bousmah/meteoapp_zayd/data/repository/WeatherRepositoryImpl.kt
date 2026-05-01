@@ -5,6 +5,7 @@ import com.bousmah.meteoapp_zayd.data.remote.WeatherApi
 import com.bousmah.meteoapp_zayd.domain.model.Forecast
 import com.bousmah.meteoapp_zayd.domain.model.Weather
 import com.bousmah.meteoapp_zayd.domain.repository.WeatherRepository
+import com.bousmah.meteoapp_zayd.util.Sanitizer
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
@@ -15,14 +16,16 @@ class WeatherRepositoryImpl @Inject constructor(
         return try {
             val dto = api.getWeatherByCity(city, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
             Result.success(Weather(
-                temperature = dto.main.temp,
-                description = dto.weather.firstOrNull()?.description ?: "N/A",
-                icon = dto.weather.firstOrNull()?.icon ?: "",
+                temperature = Sanitizer.sanitizeTemp(dto.main.temp),
+                description = Sanitizer.sanitize(dto.weather.firstOrNull()?.description ?: "N/A"),
+                icon = Sanitizer.sanitize(dto.weather.firstOrNull()?.icon ?: ""),
                 humidity = dto.main.humidity,
                 windSpeed = dto.wind.speed,
-                uvIndex = 0.0, // OpenWeather free tier current weather doesn't always have UV
-                feelsLike = dto.main.feelsLike,
-                cityName = dto.name
+                uvIndex = 0.0,
+                feelsLike = Sanitizer.sanitizeTemp(dto.main.feelsLike),
+                cityName = Sanitizer.sanitize(dto.name),
+                latitude = dto.coord.lat,
+                longitude = dto.coord.lon
             ))
         } catch (e: Exception) {
             Result.failure(e)
@@ -33,14 +36,16 @@ class WeatherRepositoryImpl @Inject constructor(
         return try {
             val dto = api.getWeatherByLocation(lat, lon, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
             Result.success(Weather(
-                temperature = dto.main.temp,
-                description = dto.weather.firstOrNull()?.description ?: "N/A",
-                icon = dto.weather.firstOrNull()?.icon ?: "",
+                temperature = Sanitizer.sanitizeTemp(dto.main.temp),
+                description = Sanitizer.sanitize(dto.weather.firstOrNull()?.description ?: "N/A"),
+                icon = Sanitizer.sanitize(dto.weather.firstOrNull()?.icon ?: ""),
                 humidity = dto.main.humidity,
                 windSpeed = dto.wind.speed,
                 uvIndex = 0.0,
-                feelsLike = dto.main.feelsLike,
-                cityName = dto.name
+                feelsLike = Sanitizer.sanitizeTemp(dto.main.feelsLike),
+                cityName = Sanitizer.sanitize(dto.name),
+                latitude = dto.coord.lat,
+                longitude = dto.coord.lon
             ))
         } catch (e: Exception) {
             Result.failure(e)
@@ -52,11 +57,11 @@ class WeatherRepositoryImpl @Inject constructor(
             val dto = api.get7DayForecast(lat, lon, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
             val forecasts = dto.list.filter { it.dtTxt.contains("12:00:00") }.map {
                 Forecast(
-                    date = it.dtTxt.split(" ")[0],
-                    minTemp = it.main.temp, // API doesn't always provide min/max in this endpoint directly for daily without paid
-                    maxTemp = it.main.temp,
-                    icon = it.weather.firstOrNull()?.icon ?: "",
-                    description = it.weather.firstOrNull()?.description ?: ""
+                    date = Sanitizer.sanitize(it.dtTxt.split(" ")[0]),
+                    minTemp = Sanitizer.sanitizeTemp(it.main.temp),
+                    maxTemp = Sanitizer.sanitizeTemp(it.main.temp),
+                    icon = Sanitizer.sanitize(it.weather.firstOrNull()?.icon ?: ""),
+                    description = Sanitizer.sanitize(it.weather.firstOrNull()?.description ?: "")
                 )
             }
             Result.success(forecasts)

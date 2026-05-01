@@ -8,7 +8,9 @@ data class Weather(
     val windSpeed: Double,
     val uvIndex: Double,
     val feelsLike: Double,
-    val cityName: String
+    val cityName: String,
+    val latitude: Double,
+    val longitude: Double
 )
 
 data class Forecast(
