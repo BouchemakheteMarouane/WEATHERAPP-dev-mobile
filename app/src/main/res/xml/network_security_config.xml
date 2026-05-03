@@ -5,4 +5,30 @@
             <certificates src="system" />
         </trust-anchors>
     </base-config>
+
+    <!-- Certificate pinning for OpenWeatherMap API -->
+    <!-- To generate pin hashes, run:
+         echo | openssl s_client -connect api.openweathermap.org:443 2>/dev/null |
+         openssl x509 -pubkey -noout |
+         openssl pkey -pubin -outform der |
+         openssl dgst -sha256 -binary |
+         base64
+    -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">openweathermap.org</domain>
+        <pin-set expiration="2028-01-01">
+            <!-- Replace with actual pin hash from the command above -->
+            <!-- <pin digest="SHA-256">REPLACE_WITH_ACTUAL_PIN</pin> -->
+            <!-- Backup pin for Let's Encrypt R3 -->
+            <!-- <pin digest="SHA-256">jQJTbIh0grw0Z1E9NwU7jB7gM4K0Z5z3hx8vS0p1wQ=</pin> -->
+        </pin-set>
+    </domain-config>
+
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">lottiefiles.com</domain>
+        <pin-set expiration="2028-01-01">
+            <!-- Replace with actual pin hash -->
+            <!-- <pin digest="SHA-256">REPLACE_WITH_ACTUAL_PIN</pin> -->
+        </pin-set>
+    </domain-config>
 </network-security-config>

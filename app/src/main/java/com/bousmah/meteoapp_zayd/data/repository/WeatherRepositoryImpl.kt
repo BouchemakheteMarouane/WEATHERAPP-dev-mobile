@@ -58,8 +58,8 @@ class WeatherRepositoryImpl @Inject constructor(
             val forecasts = dto.list.filter { it.dtTxt.contains("12:00:00") }.map {
                 Forecast(
                     date = Sanitizer.sanitize(it.dtTxt.split(" ")[0]),
-                    minTemp = Sanitizer.sanitizeTemp(it.main.temp),
-                    maxTemp = Sanitizer.sanitizeTemp(it.main.temp),
+                    minTemp = Sanitizer.sanitizeTemp(it.main.tempMin),
+                    maxTemp = Sanitizer.sanitizeTemp(it.main.tempMax),
                     icon = Sanitizer.sanitize(it.weather.firstOrNull()?.icon ?: ""),
                     description = Sanitizer.sanitize(it.weather.firstOrNull()?.description ?: "")
                 )

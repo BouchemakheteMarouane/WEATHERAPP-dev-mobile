@@ -49,7 +49,7 @@ class WeatherViewModel @Inject constructor(
     fun onSearchQueryChange(query: String) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            delay(500) // OWASP: Rate Limiting / Debounce
+            delay(500) // Debounce search to avoid excessive API calls
             if (query.isNotBlank() && query.length >= 2) {
                 loadWeatherInfo(query)
             }
@@ -68,12 +68,11 @@ class WeatherViewModel @Inject constructor(
     private suspend fun fetchWeatherByCity(city: String) {
         val weatherResult = repository.getWeatherByCity(city)
         weatherResult.onSuccess { weather ->
-            // In a real app, I'd get coords from the DTO to fetch the forecast.
-            // For this project, we prioritize the current weather display.
+            val forecastResult = repository.get7DayForecast(weather.latitude, weather.longitude)
             _state.update { it.copy(
                 weather = weather,
-                forecast = emptyList(), 
-                isLoading = false, 
+                forecast = forecastResult.getOrDefault(emptyList()),
+                isLoading = false,
                 error = null
             ) }
         }.onFailure {

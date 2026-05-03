@@ -113,7 +113,7 @@ fun DetailCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(16.dp))
+                Icon(icon, contentDescription = label, tint = iconTint, modifier = Modifier.size(16.dp))
                 Text(label, fontSize = 12.sp, color = Color.White.copy(alpha = 0.5f), fontWeight = FontWeight.Medium)
             }
             Spacer(Modifier.height(8.dp))

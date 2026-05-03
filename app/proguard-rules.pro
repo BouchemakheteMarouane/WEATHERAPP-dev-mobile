@@ -16,5 +16,8 @@
     @com.google.gson.annotations.SerializedName <fields>;
 }
 
+# Gson DTOs — keep entire package to prevent deserialization crashes in release builds
+-keep class com.bousmah.meteoapp_zayd.data.remote.dto.** { *; }
+
 # Lottie
 -keep class com.airbnb.lottie.** { *; }

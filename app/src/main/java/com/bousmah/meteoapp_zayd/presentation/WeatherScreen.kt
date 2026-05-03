@@ -187,7 +187,7 @@ fun SearchBar(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.Rounded.Search, contentDescription = null)
+            Icon(Icons.Rounded.Search, contentDescription = "Search")
             Spacer(Modifier.width(12.dp))
 
             BasicTextField(
@@ -211,9 +211,9 @@ fun SearchBar(
                 }
             )
 
-            if (query.isNotEmpty()) {
+                if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChange("") }) {
-                    Icon(Icons.Rounded.Close, contentDescription = null)
+                    Icon(Icons.Rounded.Close, contentDescription = "Clear search")
                 }
             }
         }
@@ -233,7 +233,7 @@ fun ErrorCard(error: String) {
         contentAlignment = Alignment.Center
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Rounded.Warning, contentDescription = null)
+            Icon(Icons.Rounded.Warning, contentDescription = "Error")
             Spacer(Modifier.width(8.dp))
             Text(error)
         }
