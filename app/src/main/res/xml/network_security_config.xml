@@ -31,4 +31,9 @@
             <!-- <pin digest="SHA-256">REPLACE_WITH_ACTUAL_PIN</pin> -->
         </pin-set>
     </domain-config>
+
+    <!-- Allow cleartext HTTP for local Ollama API -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
 </network-security-config>

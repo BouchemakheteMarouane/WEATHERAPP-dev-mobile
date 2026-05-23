@@ -38,7 +38,7 @@ WeatherApp provides real-time weather tracking with a dynamic, responsive UI. It
 ### Installation
 Clone the repository to your local machine:
 ```bash
-git clone https://github.com/zaydkassimi/WeatherApp.git
+git clone https://github.com/marouanekassimi/WeatherApp.git
 ```
 
 ### Configuration
@@ -46,7 +46,7 @@ git clone https://github.com/zaydkassimi/WeatherApp.git
 2. Create a `local.properties` file in the project root if it does not exist.
 3. Add your API key to the file:
 ```text
-OPEN_WEATHER_API_KEY=your_api_key_here
+OPEN_WEATHER_MAP_API_KEY=your_api_key_here
 ```
 
 ---
@@ -76,7 +76,7 @@ Key points:
 
 ## 👨‍💻 Author
 **Zayd Kassimi**  
-GitHub: [zaydkassimi](https://github.com/zaydkassimi)
+GitHub: [marouanekassimi](https://github.com/marouanekassimi)
 
 ---
 

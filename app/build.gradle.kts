@@ -4,21 +4,25 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt)
     alias(libs.plugins.secrets)
+    alias(libs.plugins.google.services)
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.bousmah.meteoapp_zayd"
+    namespace = "com.bousmah.meteoapp_marouane"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.bousmah.meteoapp_zayd"
+        applicationId = "com.bousmah.meteoapp_marouane"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Match the key name used in WeatherRepositoryImpl and local.properties
+        buildConfigField("String", "OPEN_WEATHER_API_KEY", "\"UNSET\"")
     }
 
     buildTypes {
@@ -44,11 +48,18 @@ android {
     }
 }
 
+secrets {
+    // This plugin will bridge OPEN_WEATHER_API_KEY from local.properties to BuildConfig
+    propertiesFileName = "local.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -56,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.navigation.compose)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -72,8 +84,24 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.lottie.compose)
 
-    // Location
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
+    // Location & Maps
     implementation(libs.play.services.location)
+    implementation(libs.maplibre.gl)
+
+    // CameraX
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.view)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

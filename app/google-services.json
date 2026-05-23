@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030170727052",
+    "project_id": "weatherapp-36075",
+    "storage_bucket": "weatherapp-36075.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030170727052:android:0135cfde8fb96940b9e1a9",
+        "android_client_info": {
+          "package_name": "com.bousmah.meteoapp_marouane"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwBwCFagWvb8cI6_-bTWxTEcklr0zEFOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
